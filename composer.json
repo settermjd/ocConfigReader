@@ -1,0 +1,19 @@
+{
+    "require": {
+        "phpunit/phpunit": "^7.2",
+        "mikey179/vfsStream": "^1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "ConfigReader\\": "src/ConfigReader"
+        },
+        "autoload-dev": {
+            "psr-4": {
+                "ConfigReader\\Test\\": "tests/ConfigReader"
+            }
+        },
+        "psr-0": {"": "src"}
+    },
+    "scripts": {
+    }
+}
