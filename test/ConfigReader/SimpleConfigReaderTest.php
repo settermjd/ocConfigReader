@@ -8,21 +8,7 @@ use PHPUnit\Framework\TestCase;
 class SimpleConfigReaderTest extends TestCase
 {
 	private $file_system;
-	private $config =  [
-		'apps_paths' =>
-			[
-				[
-					'path' => '/var/www/owncloud/apps',
-					'url' => '/apps',
-					'writable' => false,
-				],
-				[
-					'path' => '/var/www/owncloud/custom',
-					'url' => '/custom',
-					'writable' => true,
-				],
-			],
-	];
+	private $config;
 
 	public function setUp()
 	{
@@ -40,11 +26,26 @@ class SimpleConfigReaderTest extends TestCase
 		// setup and cache the virtual file system
 		$this->file_system = vfsStream::setup('/', 655, $directory);
 		$this->file_system->getChild('var/www/ownCloud/apps')->chmod(444);
+
+		$this->config = [
+			'apps_paths' => [
+				[
+					'path' => vfsStream::url('var/www/ownCloud/apps'),
+					'url' => '/apps',
+					'writable' => false,
+				],
+				[
+					'path' => vfsStream::url('var/www/ownCloud/custom'),
+					'url' => '/custom',
+					'writable' => true,
+				],
+			],
+		];
 	}
 
 	public function testCanReadConfigFile()
 	{
 		$reader = new SimpleConfigReader($this->config);
-		$this->assertSame('/var/www/owncloud/custom', $reader->findPath(), 'Incorrect path returned');
+		$this->assertSame(vfsStream::url('var/www/ownCloud/custom'), $reader->findPath(), 'Incorrect path returned');
 	}
 }
