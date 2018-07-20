@@ -19,9 +19,8 @@ class SimpleConfigReader
 	function findPath()
 	{
 		if (array_key_exists('apps_paths', $this->config)) {
-			// Returns the first available app directory, if one is available.
 			foreach ($this->config['apps_paths'] as $path) {
-				if ($path['writable'] == true) {
+				if ($path['writable'] == true && is_writable($path['path'])) {
 					$this->output = $path['path'];
 					break;
 				}
