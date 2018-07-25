@@ -102,4 +102,15 @@ class SimpleConfigReaderTest extends TestCase
 		$reader = new SimpleConfigReader($this->config);
 		$this->assertSame('No writable apps directory was found.', $reader->findPath(), 'Incorrect path returned');
 	}
+
+	/**
+	 * @expectedException \Exception
+	 * @expectedExceptionMessage Configuration is missing the apps_path key
+	 */
+	public function testMustHaveAppsPathConfigurationKey()
+	{
+		$this->config = [];
+		$reader = new SimpleConfigReader($this->config);
+		$reader->findPath();
+	}
 }
