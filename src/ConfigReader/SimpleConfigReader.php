@@ -1,18 +1,35 @@
 <?php
 namespace ConfigReader;
 
+/**
+ * Class SimpleConfigReader
+ * @package ConfigReader
+ */
 class SimpleConfigReader
 {
-	private $config = '';
+	/**
+	 * @var array
+	 */
+	private $config = [];
+
+	/**
+	 * String returned to the user.
+	 * @var string
+	 */
 	private $output = 'No writable apps directory was found.';
 
+	/**
+	 * SimpleConfigReader constructor.
+	 * @param string $config
+	 */
 	public function __construct($config = '')
 	{
 		$this->config = $config;
 	}
 
 	/**
-	 * Find the first writable app directory path
+	 * Find the first app directory path that is set as
+	 * being writable and is physically writable in the filesystem
 	 *
 	 * @return string
 	 * @throws \Exception
